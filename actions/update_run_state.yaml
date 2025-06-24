@@ -1,0 +1,53 @@
+---
+name: update_run_state
+runner_type: http-request
+description: Update the state of a sequencing run
+entry_point: ""
+enabled: true
+parameters:
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: true
+  run_id:
+    description: ID of the run to update
+    type: string
+    required: true
+  state:
+    description: State of the run
+    type: string
+    enum:
+      - ready
+      - error
+      - incomplete
+      - moved
+      - moving
+      - pending
+    required: true
+  body:
+    description: Request body
+    type: object
+    immutable: true
+    required: true
+    default:
+      state: "{{ state }}"
+  url:
+    description: Add run endpoint URL
+    type: string
+    default: "{{ config_context.base_url }}/api/runs/{{ run_id }}/state"
+    immutable: true
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: PATCH
+    immutable: true
+    required: true
+  headers:
+    type: object
+    immutable: true
+    required: true
+    default:
+      Authorization: "{{ api_key }}"
+      Content-Type: application/json
