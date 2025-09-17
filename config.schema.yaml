@@ -3,3 +3,11 @@ base_url:
   description: Cleve base URL.
   type: string
   required: true
+
+illumina_directories:
+  description: Root directory in which to look for new sequencing runs
+  type: array
+  required: true
+  minLength: 1
+  items:
+    type: string
