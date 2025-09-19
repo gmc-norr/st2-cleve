@@ -11,3 +11,9 @@ illumina_directories:
   minLength: 1
   items:
     type: string
+
+api_key:
+  description: Cleve API key
+  type: string
+  required: true
+  secret: true
