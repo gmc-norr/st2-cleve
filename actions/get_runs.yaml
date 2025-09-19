@@ -1,10 +1,14 @@
 ---
 name: get_runs
-runner_type: http-request
+runner_type: python-script
 description: Get sequencing runs from Cleve
-entry_point: ""
+entry_point: "cleve_request.py"
 enabled: true
 parameters:
+  api_key:
+    description: Cleve API key
+    type: string
+    required: false
   run_id:
     description: ID of the run to fetch.
     type: string
@@ -36,22 +40,26 @@ parameters:
     minimum: 1
     default: 10
     required: true
-  url:
-    description: Request URL
+  endpoint:
+    description: Cleve API endpoint
     type: string
-    default: "{{ config_context.base_url }}/api/runs?page={{ page }}&page_size={{ page_size }}{% if run_id is not none %}&run_id={{ run_id | urlencode }}{% endif %}{% if state is not none %}&state={{ state | urlencode }}{% endif %}{% if platform is not none %}&platform={{ platform | urlencode }}{% endif %}"
+    default: runs
+    immutable: true
+    required: true
+  params:
+    description: Request parameters
+    type: object
+    default:
+      page: "{{ page }}"
+      page_size: "{{ page_size }}"
+      run_id: "{% if run_id is not none %}{{ run_id | urlencode }}{% endif %}"
+      state: "{% if state is not none %}{{ state | urlencode }}{% endif %}"
+      platform: "{% if platform is not none %}{{ platform | urlencode }}{% endif %}"
     immutable: true
     required: true
   method:
     description: HTTP method
     type: string
     default: GET
-    immutable: true
-    required: true
-  headers:
-    description: Request headers
-    type: object
-    default:
-      Accept: application/json
     immutable: true
     required: true
