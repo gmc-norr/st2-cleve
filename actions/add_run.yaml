@@ -5,10 +5,10 @@ description: Add a new sequencing run
 entry_point: "cleve_request.py"
 enabled: true
 parameters:
-  url:
-    description: Add run endpoint URL
+  path:
+    description: Add run endpoint URL path
     type: string
-    default: "{{ config_context.base_url }}/api/runs"
+    default: "runs"
     immutable: true
     required: true
   method:
