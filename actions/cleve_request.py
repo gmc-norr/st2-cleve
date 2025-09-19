@@ -25,27 +25,26 @@ class CleveRequest(Action):
         )
 
         res = self.session.send(req)
-        self.logger.info(f"status_code={res.status_code}")
-        error = self.handle_error(res)
-        if error is not None:
+
+        try:
+            body = res.json()
+        except requests.exceptions.JSONDecodeError:
+            body = res.text
+
+        if res.status_code != 200:
             self.logger.error(
                 f"request failed status={res.status_code} body={res.text}"
             )
-            return False, error
-        return True, res.json()
-
-    def handle_error(self, response: requests.Response) -> Optional[Dict[str, Any]]:
-        if response.status_code != 200:
-            try:
-                body = response.json()
-            except requests.exceptions.JSONDecodeError:
-                body = response.text
-            return {
+            return False, {
                 "error": "cleve request failed",
-                "status_code": response.status_code,
+                "status_code": res.status_code,
                 "body": body,
             }
-        return None
+        return True, {
+            "message": "cleve request succeeded",
+            "status_code": res.status_code,
+            "body": body,
+        }
 
     def generate_request(
         self,
@@ -56,9 +55,10 @@ class CleveRequest(Action):
         api_key: Optional[str] = None,
     ) -> requests.PreparedRequest:
         headers = {
-            "Authorization": api_key,
             "Accept": "application/json",
         }
+        if api_key is not None:
+            headers["Authorization"] = api_key
         if method in ["POST", "PATCH", "PUT", "DELETE"]:
             headers["Content-Type"] = "application/json"
 
