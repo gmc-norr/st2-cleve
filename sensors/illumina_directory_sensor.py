@@ -31,9 +31,9 @@ class IlluminaDirectorySensor(PollingSensor):
         new_run_dirs = self.check_new_runs()
         LOG.info(f"new directories: {new_run_dirs}")
         for path in new_run_dirs:
-            LOG.info(f"dispatching trigger=cleve.new_directory path={path}")
+            LOG.info(f"dispatching trigger=cleve.new_run_directory path={path}")
             self.sensor_service.dispatch(
-                "cleve.new_directory", {"path": path}
+                "cleve.new_run_directory", {"path": path}
             )
 
     def check_new_runs(self) -> List[str]:

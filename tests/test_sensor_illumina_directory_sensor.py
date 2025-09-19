@@ -36,7 +36,7 @@ class IlluminaDirectorySensorTestCase(BaseSensorTestCase):
                 f"trigger {trigger} with payload {payload} not dispatched"
             )
 
-    def test_new_directory(self):
+    def test_new_run_directory(self):
         registered_dirs = []
         self.sensor.registered_paths = mock.Mock(return_value=registered_dirs)
 
@@ -53,7 +53,7 @@ class IlluminaDirectorySensorTestCase(BaseSensorTestCase):
         self.sensor.poll()
         triggers = self.get_dispatched_triggers()
         assert len(triggers) == 1
-        self.assert_trigger_dispatched("cleve.new_directory", {"path": new_dir_path})
+        self.assert_trigger_dispatched("cleve.new_run_directory", {"path": new_dir_path})
 
         # Add run to database
         registered_dirs.append(new_dir_path)

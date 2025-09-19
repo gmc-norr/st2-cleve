@@ -8,7 +8,7 @@ description: >
 poll_interval: 300
 enabled: true
 trigger_types:
-  - name: new_directory
+  - name: new_run_directory
     pack: cleve
     description: >
       Triggers when a new run directory is found
