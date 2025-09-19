@@ -36,7 +36,7 @@ class TestCleveRequest(BaseActionTestCase):
         data = {"path": "/path/to/run"}
         self.action.session.send = Mock(return_value=mock_response(status))
 
-        success, result = self.action.run(path="runs", method="POST", data=data)
+        success, result = self.action.run(endpoint="runs", method="POST", data=data)
         self.assertTrue(success)
         self.assertEqual(result["status_code"], status)
         self.assertEqual(result["message"], "cleve request succeeded")
@@ -47,9 +47,11 @@ class TestCleveRequest(BaseActionTestCase):
     def test_add_run_internal_server_error(self):
         status = 500
         data = {"path": "/path/to/run"}
-        self.action.session.send = Mock(return_value=mock_response(status, "random error"))
+        self.action.session.send = Mock(
+            return_value=mock_response(status, "random error")
+        )
 
-        success, result = self.action.run(path="runs", method="POST", data=data)
+        success, result = self.action.run(endpoint="runs", method="POST", data=data)
         self.assertFalse(success)
         self.assertEqual(result["status_code"], status)
         self.assertEqual(result["error"], "cleve request failed")
@@ -60,10 +62,12 @@ class TestCleveRequest(BaseActionTestCase):
     def test_add_run_unauthorized(self):
         status = 401
         data = {"path": "/path/to/run"}
-        self.action.session.send = Mock(return_value=mock_response(status, "random error"))
+        self.action.session.send = Mock(
+            return_value=mock_response(status, "random error")
+        )
 
         success, result = self.action.run(
-            path="runs", method="POST", data=data, api_key="randomkey"
+            endpoint="runs", method="POST", data=data, api_key="randomkey"
         )
         self.assertFalse(success)
         self.assertEqual(result["status_code"], status)

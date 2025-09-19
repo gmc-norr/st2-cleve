@@ -10,7 +10,7 @@ class CleveRequest(Action):
 
     def run(
         self,
-        path: str,
+        endpoint: str,
         method: str = "GET",
         params: Optional[Dict[str, Any]] = None,
         data: Optional[Dict[str, Any]] = None,
@@ -19,7 +19,7 @@ class CleveRequest(Action):
         if api_key is None:
             self.logger.info("using pack internal api key")
             api_key = self.config.get("api_key")
-        req = self.generate_request(path, method, params, data, api_key)
+        req = self.generate_request(endpoint, method, params, data, api_key)
         self.logger.info(
             f"cleve request url={req.url} method={req.method} data={req.body}"
         )
@@ -48,7 +48,7 @@ class CleveRequest(Action):
 
     def generate_request(
         self,
-        path: str,
+        endpoint: str,
         method: str = "GET",
         params: Optional[Dict[str, Any]] = None,
         data: Optional[Dict[str, Any]] = None,
@@ -62,7 +62,7 @@ class CleveRequest(Action):
         if method in ["POST", "PATCH", "PUT", "DELETE"]:
             headers["Content-Type"] = "application/json"
 
-        url = f"{self.config.get('base_url', '')}/api/{path}"
+        url = f"{self.config.get('base_url', '')}/api/{endpoint}"
         return requests.Request(
             url=url, method=method, params=params, json=data, headers=headers
         ).prepare()
