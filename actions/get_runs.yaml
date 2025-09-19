@@ -8,6 +8,7 @@ parameters:
   api_key:
     description: Cleve API key
     type: string
+    secret: true
     required: false
   run_id:
     description: ID of the run to fetch.
