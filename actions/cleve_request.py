@@ -19,14 +19,22 @@ class CleveRequest(Action):
 
         self.logger.info(f"cleve request url={url} method={method} data={data}")
 
-        res = requests.request(method=method, url=url, params=params, json=data, headers=header)
+        res = requests.request(
+            method=method, url=url, params=params, json=data, headers=header
+        )
         self.logger.info(f"status_code={res.status_code}")
         if res.status_code != 200:
-            self.logger.error(f"request failed status={res.status_code} body={res.text}")
+            self.logger.error(
+                f"request failed status={res.status_code} body={res.text}"
+            )
             try:
                 body = res.json()
             except requests.exceptions.JSONDecodeError:
                 body = res.text
-            return False, {"error": "cleve request failed", "status_code": res.status_code, "body": body}
+            return False, {
+                "error": "cleve request failed",
+                "status_code": res.status_code,
+                "body": body,
+            }
 
         return True, res.json()
