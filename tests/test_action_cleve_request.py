@@ -75,3 +75,15 @@ class TestCleveRequest(BaseActionTestCase):
         self.action.session.send.assert_called()
         req = self.action.session.send.call_args.args[0]
         self.assertEqual(req.headers["Authorization"], "randomkey")
+
+    def test_request_params(self):
+        status = 200
+        params = {"state": "pending", "run_id": None, "platform": ""}
+        self.action.session.send = Mock(return_value=mock_response(status))
+
+        success, _ = self.action.run(endpoint="runs", method="GET", params=params)
+        self.assertTrue(success)
+        req = self.action.session.send.call_args.args[0]
+        self.assertTrue("state=pending" in req.path_url)
+        self.assertFalse("run_id=" in req.path_url)
+        self.assertFalse("platform=" in req.path_url)

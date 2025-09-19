@@ -63,7 +63,14 @@ class CleveRequest(Action):
         if method in ["POST", "PATCH", "PUT", "DELETE"]:
             headers["Content-Type"] = "application/json"
 
+        clean_params = None
+        if params is not None:
+            clean_params = {}
+            for k, v in params.items():
+                if v:
+                    clean_params[k] = v
+
         url = f"{self.config.get('base_url', '')}/api/{endpoint}"
         return requests.Request(
-            url=url, method=method, params=params, json=data, headers=headers
+            url=url, method=method, params=clean_params, json=data, headers=headers
         ).prepare()
