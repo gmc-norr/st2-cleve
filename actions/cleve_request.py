@@ -15,6 +15,7 @@ class CleveRequest(Action):
         params: Optional[Dict[str, Any]] = None,
         data: Optional[Dict[str, Any]] = None,
         api_key: Optional[str] = None,
+        **kwargs,
     ) -> Tuple[bool, Dict[str, Any]]:
         if api_key is None:
             self.logger.info("using pack internal api key")

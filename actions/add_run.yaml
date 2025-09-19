@@ -5,10 +5,10 @@ description: Add a new sequencing run
 entry_point: "cleve_request.py"
 enabled: true
 parameters:
-  path:
+  endpoint:
     description: Add run endpoint URL path
     type: string
-    default: "runs"
+    default: runs
     immutable: true
     required: true
   method:
@@ -17,9 +17,16 @@ parameters:
     default: POST
     immutable: true
     required: true
+  path:
+    description: Path to sequencing run to add
+    type: string
+    required: true
   data:
-    description: Request data
+    description: Request body
     type: object
+    default:
+      path: "{{ path }}"
+    immutable: true
     required: true
   api_key:
     description: Cleve API key
@@ -34,6 +41,9 @@ output_schema:
       type: string
       required: false
       default: null
+    message:
+      type: string
+      required: true
     status_code:
       type: integer
       required: true
