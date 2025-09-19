@@ -1,0 +1,21 @@
+---
+class_name: IlluminaDirectorySensor
+entry_point: illumina_directory_sensor.py
+description: >
+  Sensor that emits triggers for seqencing run directories that are direct
+  children of a specific directory, as well as any analysis directories that
+  are found in those run directories.
+poll_interval: 300
+enabled: true
+trigger_types:
+  - name: new_run_directory
+    pack: cleve
+    description: >
+      Triggers when a new run directory is found
+    payload_schema:
+      type: object
+      properties:
+        path:
+          type: string
+          description: The path to the new directory
+          required: true
