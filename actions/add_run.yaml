@@ -1,43 +1,14 @@
 ---
 name: add_run
-runner_type: http-request
+runner_type: python-script
 description: Add a new sequencing run
-entry_point: ""
+entry_point: "cleve_request.py"
 enabled: true
 parameters:
-  api_key:
-    description: Cleve API key
+  endpoint:
+    description: Add run endpoint URL path
     type: string
-    secret: true
-    required: true
-  path:
-    description: Path to the run that should be added
-    type: string
-    required: true
-  state:
-    description: State of the run
-    type: string
-    enum:
-      - ready
-      - error
-      - incomplete
-      - moved
-      - moving
-      - pending
-    default: pending
-    required: true
-  body:
-    description: Request body
-    type: object
-    immutable: true
-    required: true
-    default:
-      path: "{{ path }}"
-      state: "{{ state }}"
-  url:
-    description: Add run endpoint URL
-    type: string
-    default: "{{ config_context.base_url }}/api/runs"
+    default: runs
     immutable: true
     required: true
   method:
@@ -46,10 +17,38 @@ parameters:
     default: POST
     immutable: true
     required: true
-  headers:
+  path:
+    description: Path to sequencing run to add
+    type: string
+    required: true
+  data:
+    description: Request body
     type: object
+    default:
+      path: "{{ path }}"
     immutable: true
     required: true
-    default:
-      Authorization: "{{ api_key }}"
-      Content-Type: application/json
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+
+output_schema:
+  type: object
+  properties:
+    error:
+      type: string
+      required: false
+      default: null
+    message:
+      type: string
+      required: true
+    status_code:
+      type: integer
+      required: true
+    body:
+      anyOf:
+        - type: string
+        - type: object
+      required: true
