@@ -48,15 +48,14 @@ class IlluminaDirectorySensor(PollingSensor):
         :param path: Path to check
         :type path: pathlib.Path
         """
-        runinfo = path / "RunInfo.xml"
-        runparameters = path / "RunParameters.xml"
-        exclude_marker = path / ".cleve_exclude"
-        if not runinfo.exists():
-            return False, f"{runinfo.name} does not exist"
-        if not runparameters.exists():
-            return False, f"{runparameters.name} does not exist"
-        if exclude_marker.exists():
-            return False, "has been marked for exclusion"
+        for filename in self.config.get("required_files", []):
+            rfile = path / filename
+            if not rfile.exists():
+                return False, f"{filename} does not exist"
+        if self.config.get("exclude_marker"):
+            exclude_marker = path / self.config.get("exclude_marker")
+            if exclude_marker.exists():
+                return False, "has been marked for exclusion"
         return True, None
 
     def check_new_runs(self) -> List[str]:

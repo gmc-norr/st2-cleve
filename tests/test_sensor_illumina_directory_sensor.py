@@ -33,6 +33,8 @@ class IlluminaDirectorySensorTestCase(BaseSensorTestCase):
             config={
                 "base_url": "http://localhost:8080",
                 "illumina_directories": [Path(d.name) for d in self.watch_directories],
+                "exclude_marker": ".cleve_exclude",
+                "required_files": ["RunInfo.xml", "RunParameters.xml"],
             }
         )
 
