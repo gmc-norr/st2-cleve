@@ -3,7 +3,6 @@ from pathlib import Path
 import requests
 from st2common import log as logging
 from st2reactor.sensor.base import PollingSensor
-from st2client.client import Client
 from typing import List, Set
 
 LOG = logging.getLogger(__name__)
@@ -15,7 +14,6 @@ class IlluminaDirectorySensor(PollingSensor):
             sensor_service, config, poll_interval
         )
         self._watched_directories = self.config.get("illumina_directories", [])
-        self._client = Client(base_url="http://localhost")
 
         LOG.debug("watched directories:")
         for wd in self._watched_directories:
