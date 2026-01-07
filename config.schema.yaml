@@ -17,3 +17,20 @@ api_key:
   type: string
   required: true
   secret: true
+
+required_files:
+  description: Files that are required in a run directory for it to be considered by the sensor
+  type: array
+  required: true
+  minLength: 1
+  items:
+    type: string
+  default:
+    - RunInfo.xml
+    - RunParameters.xml
+
+exclude_marker:
+  description: Name of a file that indicates that a run directory should be excluded by the sensor
+  type: string
+  required: true
+  default: .cleve_exclude

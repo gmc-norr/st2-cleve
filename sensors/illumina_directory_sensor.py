@@ -3,8 +3,7 @@ from pathlib import Path
 import requests
 from st2common import log as logging
 from st2reactor.sensor.base import PollingSensor
-from st2client.client import Client
-from typing import List, Set
+from typing import List, Optional, Set, Tuple
 
 LOG = logging.getLogger(__name__)
 
@@ -15,7 +14,6 @@ class IlluminaDirectorySensor(PollingSensor):
             sensor_service, config, poll_interval
         )
         self._watched_directories = self.config.get("illumina_directories", [])
-        self._client = Client(base_url="http://localhost")
 
         LOG.debug("watched directories:")
         for wd in self._watched_directories:
@@ -29,12 +27,36 @@ class IlluminaDirectorySensor(PollingSensor):
         Poll the file system for new run directories
         """
         new_run_dirs = self.check_new_runs()
-        LOG.info(f"new directories: {new_run_dirs}")
         for path in new_run_dirs:
+            ok, reason = self.valid_run_dir(Path(path))
+            if not ok:
+                LOG.warning(f"not a valid run directory path={path} reason={reason}")
+                continue
             LOG.info(f"dispatching trigger=cleve.new_run_directory path={path}")
             self.sensor_service.dispatch(
                 "cleve.new_run_directory", {"path": path}
             )
+
+    def valid_run_dir(self, path: Path) -> Tuple[bool, Optional[str]]:
+        """
+        Check that a directory is likely to be a sequencing run directory by
+        checking the existence of RunInfo.xml and RunParameters.xml. Returns
+        a tuple where the first value is a bool indicating whether or not the
+        path is a run directory, and if this is false, the second value will contain
+        the reason for this.
+
+        :param path: Path to check
+        :type path: pathlib.Path
+        """
+        for filename in self.config.get("required_files", []):
+            rfile = path / filename
+            if not rfile.exists():
+                return False, f"{filename} does not exist"
+        if self.config.get("exclude_marker"):
+            exclude_marker = path / self.config.get("exclude_marker")
+            if exclude_marker.exists():
+                return False, "has been marked for exclusion"
+        return True, None
 
     def check_new_runs(self) -> List[str]:
         """
