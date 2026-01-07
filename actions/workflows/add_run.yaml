@@ -19,7 +19,7 @@ tasks:
           - noop
       - when: <% failed() %>
         publish:
-          - msg: "failed to add run to Cleve: <% result().result.error %>"
+          - msg: "failed to add run to Cleve: <% result().result.body %>"
         do:
           - exclude_path
           - fail
