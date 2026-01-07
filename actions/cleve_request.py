@@ -75,7 +75,6 @@ class CleveRequest(Action):
         if data is not None:
             clean_data = {}
             for k, v in data.items():
-                print(k, repr(v), type(v))
                 if v:
                     if type(v) is str and v.strip() == "null":
                         clean_data[k] = None
