@@ -3,7 +3,7 @@ from pathlib import Path
 import requests
 from st2common import log as logging
 from st2reactor.sensor.base import PollingSensor
-from typing import List, Set
+from typing import List, Optional, Set, Tuple
 
 LOG = logging.getLogger(__name__)
 
@@ -27,12 +27,37 @@ class IlluminaDirectorySensor(PollingSensor):
         Poll the file system for new run directories
         """
         new_run_dirs = self.check_new_runs()
-        LOG.info(f"new directories: {new_run_dirs}")
         for path in new_run_dirs:
+            ok, reason = self.valid_run_dir(Path(path))
+            if not ok:
+                LOG.warning(f"not a valid run directory path={path} reason={reason}")
+                continue
             LOG.info(f"dispatching trigger=cleve.new_run_directory path={path}")
             self.sensor_service.dispatch(
                 "cleve.new_run_directory", {"path": path}
             )
+
+    def valid_run_dir(self, path: Path) -> Tuple[bool, Optional[str]]:
+        """
+        Check that a directory is likely to be a sequencing run directory by
+        checking the existence of RunInfo.xml and RunParameters.xml. Returns
+        a tuple where the first value is a bool indicating whether or not the
+        path is a run directory, and if this is false, the second value will contain
+        the reason for this.
+
+        :param path: Path to check
+        :type path: pathlib.Path
+        """
+        runinfo = path / "RunInfo.xml"
+        runparameters = path / "RunParameters.xml"
+        exclude_marker = path / ".cleve_exclude"
+        if not runinfo.exists():
+            return False, f"{runinfo.name} does not exist"
+        if not runparameters.exists():
+            return False, f"{runparameters.name} does not exist"
+        if exclude_marker.exists():
+            return False, "has been marked for exclusion"
+        return True, None
 
     def check_new_runs(self) -> List[str]:
         """
