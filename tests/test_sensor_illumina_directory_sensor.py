@@ -7,6 +7,17 @@ import tempfile
 from illumina_directory_sensor import IlluminaDirectorySensor
 
 
+def mock_run_dir(path: str, runinfo: bool = True, runparameters: bool = True, excluded: bool = False):
+    path = Path(path)
+    path.mkdir()
+    if runinfo:
+        (path / "RunInfo.xml").touch()
+    if runparameters:
+        (path / "RunParameters.xml").touch()
+    if excluded:
+        (path / ".cleve_exclude").touch()
+
+
 class IlluminaDirectorySensorTestCase(BaseSensorTestCase):
     sensor_cls = IlluminaDirectorySensor
 
@@ -47,7 +58,7 @@ class IlluminaDirectorySensorTestCase(BaseSensorTestCase):
 
         # Create new "run"
         new_dir_path = os.path.join(self.watch_directories[0].name, "run1")
-        os.mkdir(new_dir_path)
+        mock_run_dir(new_dir_path)
 
         # Single trigger should be dispatched
         self.sensor.poll()
@@ -62,3 +73,33 @@ class IlluminaDirectorySensorTestCase(BaseSensorTestCase):
         self.sensor.poll()
         triggers = self.get_dispatched_triggers()
         assert len(triggers) == 1
+
+    def test_excluded_run_directory(self):
+        self.sensor.registered_paths = mock.Mock(return_value=[])
+
+        self.sensor.poll()
+        triggers = self.get_dispatched_triggers()
+        assert len(triggers) == 0
+
+        # Create excluded run
+        new_dir_path = os.path.join(self.watch_directories[1].name, "run2")
+        mock_run_dir(new_dir_path, excluded=True)
+
+        # No triggers should be emitted
+        self.sensor.poll()
+        assert len(triggers) == 0
+
+    def test_invalid_run_directory(self):
+        self.sensor.registered_paths = mock.Mock(return_value=[])
+
+        self.sensor.poll()
+        triggers = self.get_dispatched_triggers()
+        assert len(triggers) == 0
+
+        # Create invalid run
+        new_dir_path = os.path.join(self.watch_directories[1].name, "run2")
+        mock_run_dir(new_dir_path, runinfo=False)
+
+        # No triggers should be emitted
+        self.sensor.poll()
+        assert len(triggers) == 0
