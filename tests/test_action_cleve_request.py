@@ -87,3 +87,19 @@ class TestCleveRequest(BaseActionTestCase):
         self.assertTrue("state=pending" in req.path_url)
         self.assertFalse("run_id=" in req.path_url)
         self.assertFalse("platform=" in req.path_url)
+
+    def test_request_data(self):
+        status = 200
+        data = {"input_files": """[{"analysis_id": "analysis1", "state": "ready", "level": "run", "parent_id": "run1"}]"""}
+        self.action.session.send = Mock(return_value=mock_response(status))
+
+        success, _ = self.action.run(endpoint="analyses", method="POST", data=data)
+        self.assertTrue(success)
+        req = self.action.session.send.call_args.args[0]
+        body = json.loads(req.body)
+
+        assert "input_files" in body
+        assert len(body["input_files"]) == 1
+        assert len(body["input_files"][0]) == 4
+        for k in ["analysis_id", "state", "level", "parent_id"]:
+            assert k in body["input_files"][0]
