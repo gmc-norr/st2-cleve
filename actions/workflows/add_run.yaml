@@ -27,7 +27,7 @@ tasks:
   exclude_path:
     action: core.local
     input:
-      cmd: "touch <% ctx(path) %>/<% ctx(exclude_marker) %>"
+      cmd: "echo '<% ctx(msg) %>' > <% ctx(path) %>/<% ctx(exclude_marker) %>"
 
 output:
   - message: <% ctx(msg) %>
