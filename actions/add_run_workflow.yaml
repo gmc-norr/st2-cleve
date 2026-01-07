@@ -8,3 +8,8 @@ parameters:
   path:
     required: true
     type: string
+  exclude_marker:
+    required: true
+    immutable: true
+    type: string
+    default: "{{ config_context.exclude_marker }}"
