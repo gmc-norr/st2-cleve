@@ -1,0 +1,13 @@
+---
+name: add_run
+description: Rule for adding a new sequencing run
+pack: cleve
+enabled: true
+
+trigger:
+  type: cleve.new_run_directory
+
+action:
+  ref: cleve.add_run_workflow
+  parameters:
+    path: "{{ trigger.path }}"
