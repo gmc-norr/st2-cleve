@@ -1,3 +1,4 @@
+import ast
 from typing import Any, Dict, Optional, Tuple
 import requests
 from st2common.runners.base_action import Action
@@ -70,7 +71,20 @@ class CleveRequest(Action):
                 if v:
                     clean_params[k] = v
 
+        clean_data = None
+        if data is not None:
+            clean_data = {}
+            for k, v in data.items():
+                print(k, repr(v), type(v))
+                if v:
+                    if type(v) is str and v.strip() == "null":
+                        clean_data[k] = None
+                    if type(v) is str and v.strip()[0] in ["[", "{"]:
+                        clean_data[k] = ast.literal_eval(v)
+                    else:
+                        clean_data[k] = v
+
         url = f"{self.config.get('base_url', '')}/api/{endpoint}"
         return requests.Request(
-            url=url, method=method, params=clean_params, json=data, headers=headers
+            url=url, method=method, params=clean_params, json=clean_data, headers=headers
         ).prepare()
