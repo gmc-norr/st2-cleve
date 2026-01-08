@@ -1,0 +1,27 @@
+---
+name: run_state_update
+description: Forward a run state update from a webhook to a new trigger
+pack: cleve
+enabled: true
+
+trigger:
+  type: core.st2.webhook
+  parameters:
+    url: cleve
+
+criteria:
+  trigger.body.unit:
+    type: equals
+    pattern: run
+  trigger.body.message_type:
+    type: equals
+    pattern: state_update
+
+action:
+  ref: core.inject_trigger
+  parameters:
+    trigger_name: cleve.run_state_update
+    payload:
+      run_id: "{{ trigger.body.id }}"
+      path: "{{ trigger.body.path }}"
+      state: "{{ trigger.body.state }}"
