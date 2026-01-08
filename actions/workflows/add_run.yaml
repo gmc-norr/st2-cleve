@@ -1,0 +1,34 @@
+version: 1.0
+
+description: Add a sequencing run to Cleve and catch any errors
+
+input:
+  - path
+  - exclude_marker
+
+tasks:
+  add_run:
+    action: cleve.add_run
+    input:
+      path: <% ctx(path) %>
+    next:
+      - when: <% succeeded() %>
+        publish:
+          - msg: "run added to cleve"
+        do:
+          - noop
+      - when: <% failed() %>
+        publish:
+          - msg: "failed to add run to Cleve: <% result().result.body %>"
+        do:
+          - exclude_path
+          - fail
+
+  exclude_path:
+    action: core.local
+    input:
+      cmd: "echo '<% ctx(msg) %>' > <% ctx(path) %>/<% ctx(exclude_marker) %>"
+
+output:
+  - message: <% ctx(msg) %>
+  - path: <% ctx(path) %>

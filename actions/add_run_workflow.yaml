@@ -1,0 +1,15 @@
+---
+name: add_run_workflow
+runner_type: orquesta
+description: Add a new sequencing run
+entry_point: "workflows/add_run.yaml"
+enabled: true
+parameters:
+  path:
+    required: true
+    type: string
+  exclude_marker:
+    required: true
+    immutable: true
+    type: string
+    default: "{{ config_context.exclude_marker }}"
