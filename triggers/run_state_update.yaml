@@ -8,6 +8,9 @@ payload_schema:
     run_id:
       type: string
       description: Run ID
+    platform:
+      type: string
+      description: The sequencing platform used
     path:
       type:
         - string
