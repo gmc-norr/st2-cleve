@@ -1,0 +1,21 @@
+---
+name: analysis_state_update
+pack: cleve
+description: A trigger that gets emitted when the state of an analysis changes
+payload_schema:
+  type: object
+  properties:
+    analysis_id:
+      type: string
+      description: Analysis ID
+    software:
+      type: string
+      description: The analysis software used
+    path:
+      type:
+        - string
+        - "null"
+      description: Path to the analysis
+    state:
+      type: string
+      description: State of the analysis
