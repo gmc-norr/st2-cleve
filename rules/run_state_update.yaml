@@ -23,5 +23,6 @@ action:
     trigger_name: cleve.run_state_update
     payload:
       run_id: "{{ trigger.body.id }}"
+      platform: "{{ trigger.body.platform }}"
       path: "{{ trigger.body.path }}"
       state: "{{ trigger.body.state }}"
