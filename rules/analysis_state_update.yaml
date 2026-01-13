@@ -1,0 +1,28 @@
+---
+name: analysis_state_update
+description: Forward an analysis state update from a webhook to a new trigger
+pack: cleve
+enabled: true
+
+trigger:
+  type: core.st2.webhook
+  parameters:
+    url: cleve
+
+criteria:
+  trigger.body.unit:
+    type: equals
+    pattern: analysis
+  trigger.body.message_type:
+    type: equals
+    pattern: state_update
+
+action:
+  ref: core.inject_trigger
+  parameters:
+    trigger_name: cleve.analysis_state_update
+    payload:
+      analysis_id: "{{ trigger.body.id }}"
+      software: "{{ trigger.body.platform }}"
+      path: "{{ trigger.body.path }}"
+      state: "{{ trigger.body.state }}"
