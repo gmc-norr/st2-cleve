@@ -1,0 +1,21 @@
+---
+name: run_state_update
+pack: cleve
+description: A trigger that gets emitted when the state of a run changes
+payload_schema:
+  type: object
+  properties:
+    run_id:
+      type: string
+      description: Run ID
+    platform:
+      type: string
+      description: The sequencing platform used
+    path:
+      type:
+        - string
+        - "null"
+      description: Path to the run
+    state:
+      type: string
+      description: State of the run
