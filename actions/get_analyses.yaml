@@ -1,0 +1,76 @@
+---
+name: get_analyses
+runner_type: python-script
+description: Get sequencing analyses from Cleve
+entry_point: "cleve_request.py"
+enabled: true
+parameters:
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+  analysis_id:
+    description: ID of the analysis to fetch.
+    type: string
+    required: false
+  run_id:
+    description: ID of the run to fetch.
+    type: string
+    required: false
+  state:
+    description: Filter on the most recent run state
+    type: string
+    enum:
+      - ready
+      - error
+      - incomplete
+      - moved
+      - moving
+      - pending
+    required: false
+  software:
+    description: Filter on software
+    type: string
+    required: false
+  software_pattern:
+    description: Filter on software pattern
+    type: string
+    required: false
+  page:
+    description: Page of results to get
+    type: integer
+    minimum: 1
+    default: 1
+    required: true
+  page_size:
+    description: Max number of results per page
+    type: integer
+    minimum: 1
+    default: 10
+    required: true
+  endpoint:
+    description: Cleve API endpoint
+    type: string
+    default: analyses{% if analysis_id is not none %}/{{ analysis_id | urlencode }}{% endif %}
+    immutable: true
+    required: true
+  params:
+    description: Request parameters
+    type: object
+    default:
+      page: "{{ page }}"
+      page_size: "{{ page_size }}"
+      analysis_id: "{% if analysis_id is not none %}{{ analysis_id | urlencode }}{% endif %}"
+      run_id: "{% if analysis_id is not none %}{{ run_id | urlencode }}{% endif %}"
+      state: "{% if state is not none %}{{ state | urlencode }}{% endif %}"
+      software: "{% if software is not none %}{{ software | urlencode }}{% endif %}"
+      software_pattern: "{% if software is not none %}{{ software_pattern | urlencode }}{% endif %}"
+    immutable: true
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: GET
+    immutable: true
+    required: true
