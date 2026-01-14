@@ -17,13 +17,13 @@ parameters:
   section:
     description: Filter on section
     type: string
-    required: true
+    required: false
   column:
-    description: Filter on data column
+    description: Extract column from the data section
     type: string
     required: false
   key:
-    description: Page of results to get
+    description: Extract value of key from the settings section 
     type: string
     required: false
   params:
