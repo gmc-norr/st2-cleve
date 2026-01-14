@@ -52,7 +52,7 @@ parameters:
   endpoint:
     description: Cleve API endpoint
     type: string
-    default: analyses{% if analysis_id is not none %}/{{ analysis_id | urlencode }}{% endif %}
+    default: analyses
     immutable: true
     required: true
   params:
@@ -62,10 +62,10 @@ parameters:
       page: "{{ page }}"
       page_size: "{{ page_size }}"
       analysis_id: "{% if analysis_id is not none %}{{ analysis_id | urlencode }}{% endif %}"
-      run_id: "{% if analysis_id is not none %}{{ run_id | urlencode }}{% endif %}"
+      run_id: "{% if run_id is not none %}{{ run_id | urlencode }}{% endif %}"
       state: "{% if state is not none %}{{ state | urlencode }}{% endif %}"
       software: "{% if software is not none %}{{ software | urlencode }}{% endif %}"
-      software_pattern: "{% if software is not none %}{{ software_pattern | urlencode }}{% endif %}"
+      software_pattern: "{% if software_pattern is not none %}{{ software_pattern | urlencode }}{% endif %}"
     immutable: true
     required: true
   method:
