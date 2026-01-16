@@ -1,7 +1,7 @@
 ---
 name: update_analysis
 runner_type: python-script
-description: Add a new analysis run
+description: Update an analysis
 entry_point: "cleve_request.py"
 enabled: true
 parameters:
@@ -10,7 +10,7 @@ parameters:
     type: string
     required: true
   endpoint:
-    description: update analyses endpoint URL path
+    description: Update analysis endpoint URL path
     type: string
     default: analyses/{{ analysis_id }}
     immutable: true
@@ -22,7 +22,7 @@ parameters:
     immutable: true
     required: true
   path:
-    description: Path to analysis
+    description: Path to the analysis
     type: string
     required: false
   state:
@@ -37,7 +37,7 @@ parameters:
       - moving
       - pending
   files:
-    description: List of input files
+    description: List of input file objects
     type: string
     required: false
   data:
