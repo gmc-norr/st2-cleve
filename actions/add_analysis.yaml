@@ -1,7 +1,7 @@
 ---
 name: add_analysis
 runner_type: python-script
-description: Add a new analysis run
+description: Add a new analysis
 entry_point: "cleve_request.py"
 enabled: true
 parameters:
