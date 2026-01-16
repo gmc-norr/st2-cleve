@@ -15,11 +15,11 @@ parameters:
     type: string
     required: false
   run_id:
-    description: ID of the run to fetch.
+    description: Filter on analyses associated with a specific run ID
     type: string
     required: false
   state:
-    description: Filter on the most recent run state
+    description: Filter on the most recent state
     type: string
     enum:
       - ready
