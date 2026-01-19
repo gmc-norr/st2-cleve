@@ -1,0 +1,42 @@
+---
+name: get_samplesheet
+runner_type: python-script
+description: Get sequencing runs from Cleve
+entry_point: "cleve_request.py"
+enabled: true
+parameters:
+  run_id:
+    description: ID of the run to fetch the samplesheet of.
+    type: string
+    required: true
+  endpoint:
+    description: Cleve API endpoint
+    type: string
+    default: "runs/{{ run_id | urlencode }}/samplesheet"
+    required: true
+  section:
+    description: Filter on section
+    type: string
+    required: false
+  column:
+    description: Extract column from the data section
+    type: string
+    required: false
+  key:
+    description: Extract value of key from the settings section 
+    type: string
+    required: false
+  params:
+    description: Request parameters
+    type: object
+    default:
+      section: "{% if section is not none %}{{ section | urlencode }}{% endif %}"
+      column: "{% if column is not none %}{{ column | urlencode }}{% endif %}"
+      key: "{% if key is not none %}{{ key | urlencode }}{% endif %}"
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: GET
+    immutable: true
+    required: true
