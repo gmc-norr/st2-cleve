@@ -1,0 +1,96 @@
+---
+name: add_analysis
+runner_type: python-script
+description: Add a new analysis
+entry_point: "cleve_request.py"
+enabled: true
+parameters:
+  endpoint:
+    description: Add analysis endpoint URL path
+    type: string
+    default: analyses
+    immutable: true
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: POST
+    immutable: true
+    required: true
+  path:
+    description: Path to analysis to add
+    type: string
+    required: true
+  run_id:
+    description: Run ID
+    type: string
+    required: true
+  analysis_id:
+    description: ID of the analysis to add
+    type: string
+    required: true
+  state:
+    description: State of the analysis
+    type: string
+    required: true
+    enum:
+      - ready
+      - error
+      - incomplete
+      - moved
+      - moving
+      - pending
+  software:
+    description: Software used to perform the analysis
+    type: string
+    required: true
+  software_version:
+    description: Version of the software used to perform the analyis
+    type: string
+    required: true
+  input_files:
+    description: List of input files objects in json format
+    type: string
+    required: false
+  output_files:
+    description: List of output files objects in json format
+    type: string
+    required: false
+  data:
+    description: Request body
+    type: object
+    default:
+      path: "{{ path }}"
+      run_id: "{{ run_id }}"
+      analysis_id: "{{ analysis_id }}"
+      state: "{{ state }}"
+      software: "{{ software }}"
+      software_version: "{{ software_version }}"
+      input_files: "{% if input_files is not none %}{{ input_files }}{% endif %}"
+      output_files: "{% if output_files is not none %}{{ output_files }}{% endif %}"
+    immutable: true
+    required: true
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+
+output_schema:
+  type: object
+  properties:
+    error:
+      type: string
+      required: false
+      default: null
+    message:
+      type: string
+      required: true
+    status_code:
+      type: integer
+      required: true
+    body:
+      anyOf:
+        - type: string
+        - type: object
+      required: true
