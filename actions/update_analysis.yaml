@@ -1,0 +1,75 @@
+---
+name: update_analysis
+runner_type: python-script
+description: Update an analysis
+entry_point: "cleve_request.py"
+enabled: true
+parameters:
+  analysis_id:
+    description: ID of the analysis to update
+    type: string
+    required: true
+  endpoint:
+    description: Update analysis endpoint URL path
+    type: string
+    default: analyses/{{ analysis_id }}
+    immutable: true
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: PATCH
+    immutable: true
+    required: true
+  path:
+    description: Path to the analysis
+    type: string
+    required: false
+  state:
+    description: State of the analysis
+    type: string
+    required: false
+    enum:
+      - ready
+      - error
+      - incomplete
+      - moved
+      - moving
+      - pending
+  files:
+    description: List of input file objects
+    type: string
+    required: false
+  data:
+    description: Request body
+    type: object
+    default:
+      path: "{% if path is not none %}{{ path }}{% endif %}"
+      state: "{% if state is not none %}{{ state }}{% endif %}"
+      files: "{% if files is not none %}{{ files }}{% endif %}" 
+    immutable: true
+    required: true
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+
+output_schema:
+  type: object
+  properties:
+    error:
+      type: string
+      required: false
+      default: null
+    message:
+      type: string
+      required: true
+    status_code:
+      type: integer
+      required: true
+    body:
+      anyOf:
+        - type: string
+        - type: object
+      required: true
