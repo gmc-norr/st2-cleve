@@ -18,7 +18,7 @@ parameters:
     description: >
       The ID of the parent of the analysis. If the analysis level is
       "run", then the parent_id would be the run ID, sample ID if the
-      level is "sample, and case ID if the level is "case".
+      level is "sample", and case ID if the level is "case".
     type: string
     required: false
   type:
