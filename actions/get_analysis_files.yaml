@@ -31,6 +31,7 @@ parameters:
       - vcf_sv
       - fastq
       - text
+      - interop
     required: false
   level:
     description: >
