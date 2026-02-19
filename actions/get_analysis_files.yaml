@@ -31,6 +31,10 @@ parameters:
       - vcf_sv
       - fastq
       - text
+      - png
+      - html
+      - d4
+      - interop
     required: false
   level:
     description: >
