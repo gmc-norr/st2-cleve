@@ -1,0 +1,80 @@
+---
+name: get_analysis_file_prefix
+runner_type: python-script
+description: Get prefix of files from an analysis in Cleve
+entry_point: cleve_request.py
+enabled: true
+parameters:
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+  analysis_id:
+    description: ID of the analysis to fetch files from
+    type: string
+    required: false
+  parent_id:
+    description: >
+      The ID of the parent of the analysis. If the analysis level is
+      "run", then the parent_id would be the run ID, sample ID if the
+      level is "sample", and case ID if the level is "case".
+    type: string
+    required: false
+  type:
+    description: The requested file type
+    type: string
+    enum:
+      - bam
+      - vcf
+      - vcf_snv
+      - vcf_sv
+      - fastq
+      - text
+      - png
+      - html
+      - d4
+      - interop
+    required: false
+  level:
+    description: >
+      Analysis level to filter on
+    type: string
+    enum:
+      - run
+      - case
+      - sample
+  name:
+    description: >
+      The exact name of the analysis file that should be fetched
+    type: string
+    required: false
+  pattern:
+    description: >
+      Regular expression to filter files to get prefix of
+    type: string
+    required: false
+  method:
+    description: HTTP method
+    type: string
+    immutable: true
+    required: true
+    default: GET
+  endpoint:
+    description: Cleve API endpoint
+    type: string
+    immutable: true
+    required: true
+    default: "analyses/files/prefix"
+  params:
+    description: Request parameters
+    type: object
+    immutable: true
+    required: true
+    default:
+      analysis_id: "{% if analysis_id is not none %}{{ analysis_id | urlencode }}{% endif %}"
+      parent_id: "{% if parent_id is not none %}{{ parent_id | urlencode }}{% endif %}"
+      type: "{% if type is not none %}{{ type | urlencode }}{% endif %}"
+      level: "{% if level is not none %}{{ level | urlencode }}{% endif %}"
+      name: "{% if name is not none %}{{ name | urlencode }}{% endif %}"
+      pattern: "{% if pattern is not none %}{{ pattern | urlencode }}{% endif %}"
