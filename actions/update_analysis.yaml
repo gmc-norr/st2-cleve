@@ -38,7 +38,9 @@ parameters:
       - pending
   files:
     description: List of input file objects
-    type: string
+    type: array
+    items:
+      type: object
     required: false
   data:
     description: Request body
