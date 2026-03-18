@@ -46,11 +46,15 @@ parameters:
     required: true
   input_files:
     description: List of input files objects in json format
-    type: string
+    type: array
+    items:
+      type: object
     required: false
   output_files:
     description: List of output files objects in json format
-    type: string
+    type: array
+    items:
+      type: object
     required: false
   data:
     description: Request body
