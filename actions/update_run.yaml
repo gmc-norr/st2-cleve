@@ -1,7 +1,7 @@
 ---
 name: update_run
 runner_type: http-request
-description: Update the a sequencing run
+description: Update a sequencing run
 entry_point: ""
 enabled: true
 parameters:
@@ -9,7 +9,7 @@ parameters:
     description: Cleve API key
     type: string
     secret: true
-    required: true
+    required: false
   run_id:
     description: ID of the run to update
     type: string
