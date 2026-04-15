@@ -67,7 +67,7 @@ parameters:
     immutable: true
     required: true
     default:
-      parent_id: "{% if parent_id is not none %}{{ parent_id | urlencode }}{% endif %}"
-      type: "{% if type is not none %}{{ type | urlencode }}{% endif %}"
-      level: "{% if level is not none %}{{ level | urlencode }}{% endif %}"
-      name: "{% if name is not none %}{{ name | urlencode }}{% endif %}"
+      parent_id: "{% if parent_id is not none %}{{ parent_id }}{% endif %}"
+      type: "{% if type is not none %}{{ type }}{% endif %}"
+      level: "{% if level is not none %}{{ level }}{% endif %}"
+      name: "{% if name is not none %}{{ name }}{% endif %}"

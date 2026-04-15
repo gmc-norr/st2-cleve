@@ -61,11 +61,11 @@ parameters:
     default:
       page: "{{ page }}"
       page_size: "{{ page_size }}"
-      analysis_id: "{% if analysis_id is not none %}{{ analysis_id | urlencode }}{% endif %}"
-      run_id: "{% if run_id is not none %}{{ run_id | urlencode }}{% endif %}"
-      state: "{% if state is not none %}{{ state | urlencode }}{% endif %}"
-      software: "{% if software is not none %}{{ software | urlencode }}{% endif %}"
-      software_pattern: "{% if software_pattern is not none %}{{ software_pattern | urlencode }}{% endif %}"
+      analysis_id: "{% if analysis_id is not none %}{{ analysis_id }}{% endif %}"
+      run_id: "{% if run_id is not none %}{{ run_id }}{% endif %}"
+      state: "{% if state is not none %}{{ state }}{% endif %}"
+      software: "{% if software is not none %}{{ software }}{% endif %}"
+      software_pattern: "{% if software_pattern is not none %}{{ software_pattern }}{% endif %}"
     immutable: true
     required: true
   method:
