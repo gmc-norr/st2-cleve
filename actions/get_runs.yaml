@@ -53,9 +53,9 @@ parameters:
     default:
       page: "{{ page }}"
       page_size: "{{ page_size }}"
-      run_id: "{% if run_id is not none %}{{ run_id | urlencode }}{% endif %}"
-      state: "{% if state is not none %}{{ state | urlencode }}{% endif %}"
-      platform: "{% if platform is not none %}{{ platform | urlencode }}{% endif %}"
+      run_id: "{% if run_id is not none %}{{ run_id }}{% endif %}"
+      state: "{% if state is not none %}{{ state }}{% endif %}"
+      platform: "{% if platform is not none %}{{ platform }}{% endif %}"
     immutable: true
     required: true
   method:

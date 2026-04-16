@@ -30,9 +30,9 @@ parameters:
     description: Request parameters
     type: object
     default:
-      section: "{% if section is not none %}{{ section | urlencode }}{% endif %}"
-      column: "{% if column is not none %}{{ column | urlencode }}{% endif %}"
-      key: "{% if key is not none %}{{ key | urlencode }}{% endif %}"
+      section: "{% if section is not none %}{{ section }}{% endif %}"
+      column: "{% if column is not none %}{{ column }}{% endif %}"
+      key: "{% if key is not none %}{{ key }}{% endif %}"
     required: true
   method:
     description: HTTP method
