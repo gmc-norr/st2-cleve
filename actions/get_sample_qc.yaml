@@ -1,0 +1,32 @@
+---
+name: get_sample_qc
+runner_type: python-script
+description: Get sample qc data from Cleve
+entry_point: "cleve_request.py"
+enabled: true
+parameters:
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+  run_id:
+    description: ID of the run to fetch qc data for.
+    type: string
+    required: true
+  sample_id:
+    description: ID of the sample to fetch qc data for.
+    type: string
+    required: false
+  endpoint:
+    description: Cleve API endpoint
+    type: string
+    default: "runs/{{ run_id }}/qc/samples{% if sample_id is not none %}/{{ sample_id }}{% endif %}"
+    immutable: true
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: GET
+    immutable: true
+    required: true
