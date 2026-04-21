@@ -1,5 +1,5 @@
 ---
-name: get_sample_qc
+name: get_run_qc
 runner_type: python-script
 description: Get sample qc data from Cleve
 entry_point: "cleve_request.py"
@@ -21,7 +21,7 @@ parameters:
   endpoint:
     description: Cleve API endpoint
     type: string
-    default: "runs/{{ run_id }}/qc/samples{% if sample_id is not none %}/{{ sample_id }}{% endif %}"
+    default: "runs/{{ run_id }}/qc{% if sample_id is not none %}/samples/{{ sample_id }}{% endif %}"
     immutable: true
     required: true
   method:
