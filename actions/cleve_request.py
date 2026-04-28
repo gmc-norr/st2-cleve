@@ -26,7 +26,7 @@ class CleveRequest(Action):
             f"cleve request url={req.url} method={req.method} data={req.body}"
         )
 
-        res = self.session.send(req)
+        res = self.session.send(req, verify="/etc/ssl/certs/ca-certificates.crt")
 
         try:
             body = res.json()
