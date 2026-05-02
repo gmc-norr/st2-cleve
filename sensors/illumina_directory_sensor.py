@@ -91,6 +91,7 @@ class IlluminaDirectorySensor(PollingSensor):
             params={
                 "page_size": 0,
             },
+            verify="/etc/ssl/certs/ca-certificates.crt",
         )
         if res.status_code != 200:
             LOG.error(
