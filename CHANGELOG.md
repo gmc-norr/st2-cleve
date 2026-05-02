@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/gmc-norr/st2-cleve/compare/v1.0.0...v1.0.1) (2026-05-02)
+
+
+### Bug Fixes
+
+* use system certificates in sensor request ([#33](https://github.com/gmc-norr/st2-cleve/issues/33)) ([41394b4](https://github.com/gmc-norr/st2-cleve/commit/41394b43b9c321970e888b7ac4a98795915498c1))
+
 ## 1.0.0 (2026-05-02)
 
 
