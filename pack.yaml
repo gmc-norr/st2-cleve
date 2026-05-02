@@ -1,7 +1,7 @@
 ref: cleve
 name: cleve
 description: StackStorm pack for interacting with Cleve (https://github.com/gmc-norr/cleve)
-version: 1.0.0
+version: 1.0.1
 python_versions:
   - '3'
 dependencies: null
