@@ -1,7 +1,7 @@
 ---
 name: get_samplesheet
 runner_type: python-script
-description: Get sequencing runs from Cleve
+description: Get samplesheets from Cleve
 entry_point: "cleve_request.py"
 enabled: true
 parameters:
