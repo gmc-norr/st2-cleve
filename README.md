@@ -4,7 +4,7 @@ This StackStorm pack provides actions for interacting with [Cleve](https://githu
 
 ## Requirements
 
-The pack is tightly coupled to the Cleve API, and currently requires Cleve >=0.8.0.
+The pack is tightly coupled to the Cleve API, and currently requires Cleve >=1.0.0
 
 ## Configuration
 
