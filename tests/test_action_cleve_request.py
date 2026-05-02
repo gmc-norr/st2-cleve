@@ -90,7 +90,9 @@ class TestCleveRequest(BaseActionTestCase):
 
     def test_request_data(self):
         status = 200
-        data = {"input_files": """[{"analysis_id": "analysis1", "state": "ready", "level": "run", "parent_id": "run1"}]"""}
+        data = {
+            "input_files": """[{"analysis_id": "analysis1", "state": "ready", "level": "run", "parent_id": "run1"}]"""
+        }
         self.action.session.send = Mock(return_value=mock_response(status))
 
         success, _ = self.action.run(endpoint="analyses", method="POST", data=data)

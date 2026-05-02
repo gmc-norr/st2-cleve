@@ -33,9 +33,7 @@ class IlluminaDirectorySensor(PollingSensor):
                 LOG.warning(f"not a valid run directory path={path} reason={reason}")
                 continue
             LOG.info(f"dispatching trigger=cleve.new_run_directory path={path}")
-            self.sensor_service.dispatch(
-                "cleve.new_run_directory", {"path": path}
-            )
+            self.sensor_service.dispatch("cleve.new_run_directory", {"path": path})
 
     def valid_run_dir(self, path: Path) -> Tuple[bool, Optional[str]]:
         """
@@ -88,11 +86,16 @@ class IlluminaDirectorySensor(PollingSensor):
     def registered_paths(self) -> Set[str]:
         paths = set()
         url = f"{self.config['base_url']}/api/runs"
-        res = requests.get(url, params={
-            "page_size": 0,
-        })
+        res = requests.get(
+            url,
+            params={
+                "page_size": 0,
+            },
+        )
         if res.status_code != 200:
-            LOG.error(f"failed to get runs from cleve status={res.status_code} response={res.text}")
+            LOG.error(
+                f"failed to get runs from cleve status={res.status_code} response={res.text}"
+            )
             return paths
 
         runs = res.json().get("runs", [])

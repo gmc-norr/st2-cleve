@@ -46,7 +46,7 @@ parameters:
     default:
       path: "{% if path is not none %}{{ path }}{% endif %}"
       state: "{% if state is not none %}{{ state }}{% endif %}"
-      files: "{% if files is not none %}{{ files }}{% endif %}" 
+      files: "{% if files is not none %}{{ files }}{% endif %}"
     immutable: true
     required: true
   api_key:
