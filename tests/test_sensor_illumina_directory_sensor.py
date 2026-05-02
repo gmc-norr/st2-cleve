@@ -7,7 +7,9 @@ import tempfile
 from illumina_directory_sensor import IlluminaDirectorySensor
 
 
-def mock_run_dir(path: str, runinfo: bool = True, runparameters: bool = True, excluded: bool = False):
+def mock_run_dir(
+    path: str, runinfo: bool = True, runparameters: bool = True, excluded: bool = False
+):
     path = Path(path)
     path.mkdir()
     if runinfo:
@@ -66,7 +68,9 @@ class IlluminaDirectorySensorTestCase(BaseSensorTestCase):
         self.sensor.poll()
         triggers = self.get_dispatched_triggers()
         assert len(triggers) == 1
-        self.assert_trigger_dispatched("cleve.new_run_directory", {"path": new_dir_path})
+        self.assert_trigger_dispatched(
+            "cleve.new_run_directory", {"path": new_dir_path}
+        )
 
         # Add run to database
         registered_dirs.append(new_dir_path)

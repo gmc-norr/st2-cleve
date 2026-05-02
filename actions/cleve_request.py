@@ -85,5 +85,9 @@ class CleveRequest(Action):
 
         url = f"{self.config.get('base_url', '')}/api/{endpoint}"
         return requests.Request(
-            url=url, method=method, params=clean_params, json=clean_data, headers=headers
+            url=url,
+            method=method,
+            params=clean_params,
+            json=clean_data,
+            headers=headers,
         ).prepare()

@@ -23,7 +23,7 @@ parameters:
     type: string
     required: false
   key:
-    description: Extract value of key from the settings section 
+    description: Extract value of key from the settings section
     type: string
     required: false
   params:
