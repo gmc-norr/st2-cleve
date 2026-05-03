@@ -13,9 +13,9 @@ By default this is `RunInfo.xml` and `RunParameters.xml`.
 If not all required files are found, the directory will be ignored, and a warning will be logged.
 
 If the workflow `add_run_workflow` gets an error response from Cleve, it will mark the sequencing run that was attempted to be added as excluded.
-By default it writes the file `.cleve-exclude` in the run directory.
+By default it writes the file `.cleve_exclude` in the run directory.
 This will tell the sensor to not attempt to add this run again.
-If this was caused by an error that is fixable, you can simply delete the `.cleve-exclude` file, and the sensor will pick this up on the next poll.
+If this was caused by an error that is fixable, you can simply delete the `.cleve_exclude` file, and the sensor will pick this up on the next poll.
 
 ## Configuration
 
