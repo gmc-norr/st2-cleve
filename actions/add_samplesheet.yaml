@@ -1,12 +1,12 @@
 ---
 name: add_samplesheet
 runner_type: python-script
-description: Add a new sequencing run
+description: Add or update a samplesheet for a run.
 entry_point: "cleve_request.py"
 enabled: true
 parameters:
   run_id:
-    description: ID of the run to fetch qc data for.
+    description: ID of the run to add the samplesheet to
     type: string
     required: true
   samplesheet:
