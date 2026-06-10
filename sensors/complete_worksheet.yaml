@@ -1,0 +1,29 @@
+---
+class_name: CompleteWorksheetSensor
+entry_point: complete_worksheet.py
+description: >
+  Sensor that emits triggers for seqencing run directories that are direct
+  children of a specific directory, as well as any analysis directories that
+  are found in those run directories.
+poll_interval: 3600
+enabled: true
+trigger_types:
+  - name: complete_worksheet
+    pack: cleve
+    description: >
+      Triggers when a new run directory is found
+    payload_schema:
+      type: object
+      properties:
+        test_profile:
+          type: string
+          description: The path to the new directory
+          required: true
+        completed_samples:
+          type: array
+          description: Samples that completed the analysis successfully
+          required: false
+        failed_samples:
+          type: array
+          description: Samples that failed the analysis 
+          required: false
