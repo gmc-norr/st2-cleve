@@ -2,9 +2,8 @@
 class_name: CompleteWorksheetSensor
 entry_point: complete_worksheet.py
 description: >
-  Sensor that emits triggers for seqencing run directories that are direct
-  children of a specific directory, as well as any analysis directories that
-  are found in those run directories.
+  Sensor that emits triggers for when all samples in an
+  automation log file is marked either as completed or failed.
 poll_interval: 3600
 enabled: true
 trigger_types:
