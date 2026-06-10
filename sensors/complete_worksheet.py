@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from st2common import log as logging
 from st2reactor.sensor.base import PollingSensor
-from typing import List, Optional, Set, Tuple
 
 LOG = logging.getLogger(__name__)
 
