@@ -12,7 +12,7 @@ class CompleteWorksheetSensor(PollingSensor):
             sensor_service, config, poll_interval
         )
         self._watched_directories = self.config.get("illumina_directories", [])
-        self._log_file_suffix = "automation.log"
+        self._log_file_suffix = self.config.get("log_suffix")
         LOG.debug("watched directories:")
         for wd in self._watched_directories:
             LOG.debug(f"  - {wd}")
