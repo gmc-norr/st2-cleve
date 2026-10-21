@@ -26,6 +26,7 @@ parameters:
     type: string
     enum:
       - bam
+      - bed
       - vcf
       - vcf_snv
       - vcf_sv
