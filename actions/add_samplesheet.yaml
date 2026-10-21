@@ -1,0 +1,58 @@
+---
+name: add_samplesheet
+runner_type: python-script
+description: Add or update a samplesheet for a run.
+entry_point: "cleve_request.py"
+enabled: true
+parameters:
+  run_id:
+    description: ID of the run to add the samplesheet to
+    type: string
+    required: true
+  samplesheet:
+    description: Path to samplesheet to add
+    type: string
+    required: true
+  data:
+    description: Request body
+    type: object
+    default:
+      samplesheet: "{{ samplesheet }}"
+    immutable: true
+    required: true
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+  endpoint:
+    description: Add run endpoint URL path
+    type: string
+    default: runs/{{ run_id }}/samplesheet
+    immutable: true
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: POST
+    immutable: true
+    required: true
+
+output_schema:
+  type: object
+  properties:
+    error:
+      type: string
+      required: false
+      default: null
+    message:
+      type: string
+      required: true
+    status_code:
+      type: integer
+      required: true
+    body:
+      anyOf:
+        - type: string
+        - type: object
+      required: true
