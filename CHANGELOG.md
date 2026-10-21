@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/gmc-norr/st2-cleve/compare/v1.0.1...v1.1.0) (2026-10-21)
+
+
+### Features
+
+* add bed as file type in `get analysis files` ([#39](https://github.com/gmc-norr/st2-cleve/issues/39)) ([3dc6b8e](https://github.com/gmc-norr/st2-cleve/commit/3dc6b8e17f71deaf3ad616ea51b7331ec8a6beca))
+
 ## [1.0.1](https://github.com/gmc-norr/st2-cleve/compare/v1.0.0...v1.0.1) (2026-05-02)
 
 
