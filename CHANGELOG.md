@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/gmc-norr/st2-cleve/compare/v1.0.1...v1.1.0) (2026-10-26)
+
+
+### Features
+
+* add bed as file type in `get analysis files` ([#39](https://github.com/gmc-norr/st2-cleve/issues/39)) ([3dc6b8e](https://github.com/gmc-norr/st2-cleve/commit/3dc6b8e17f71deaf3ad616ea51b7331ec8a6beca))
+
+
+### Bug Fixes
+
+* don't add new runs if Cleve can't be reached ([#42](https://github.com/gmc-norr/st2-cleve/issues/42)) ([5640586](https://github.com/gmc-norr/st2-cleve/commit/5640586559aa18fe30bb924f238ed652a718b71c))
+* lock ruff linting version in github workflow ([#43](https://github.com/gmc-norr/st2-cleve/issues/43)) ([5600043](https://github.com/gmc-norr/st2-cleve/commit/5600043010a552947c147dfb2d63e570554333b8))
+
 ## [1.0.1](https://github.com/gmc-norr/st2-cleve/compare/v1.0.0...v1.0.1) (2026-05-02)
 
 
