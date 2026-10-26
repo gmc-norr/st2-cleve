@@ -65,7 +65,10 @@ class IlluminaDirectorySensor(PollingSensor):
         """
         disk_paths = self.potential_run_dirs()
         cleve_paths = self.registered_paths()
-        new_dirs = disk_paths.difference(cleve_paths)
+        if cleve_paths is None:
+            return []
+        else:
+            new_dirs = disk_paths.difference(cleve_paths)
         return list(new_dirs)
 
     def potential_run_dirs(self) -> Set[str]:
@@ -83,7 +86,7 @@ class IlluminaDirectorySensor(PollingSensor):
                 dirs.add(str(dirpath))
         return dirs
 
-    def registered_paths(self) -> Set[str]:
+    def registered_paths(self) -> Optional[Set[str]]:
         paths = set()
         url = f"{self.config['base_url']}/api/runs"
         res = requests.get(
@@ -97,7 +100,7 @@ class IlluminaDirectorySensor(PollingSensor):
             LOG.error(
                 f"failed to get runs from cleve status={res.status_code} response={res.text}"
             )
-            return paths
+            return None
 
         runs = res.json().get("runs", [])
         for run in runs:
