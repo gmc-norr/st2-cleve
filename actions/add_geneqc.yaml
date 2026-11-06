@@ -1,0 +1,34 @@
+---
+name: add_geneqc
+runner_type: python-script
+description: Add geneQC data to Cleve
+entry_point: "cleve_request.py"
+enabled: true
+parameters:
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+  endpoint:
+    description: Cleve API endpoint
+    type: string
+    default: "geneqc"
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: POST
+    immutable: true
+    required: true
+  path:
+    description: Path to gene QC data to add
+    type: string
+    required: true
+  data:
+    description: Request body
+    type: object
+    default:
+      path: "{{ path }}"
+    immutable: true
+    required: true
