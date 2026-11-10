@@ -1,0 +1,41 @@
+---
+name: update_geneqc
+runner_type: python-script
+description: Update gene QC data for a specific RunID
+entry_point: "cleve_request.py"
+enabled: true
+parameters:
+  api_key:
+    description: Cleve API key
+    type: string
+    secret: true
+    required: false
+  run_id:
+    description: ID of the run to update
+    type: string
+    required: true
+  endpoint:
+    description: Add geneqc endpoint URL
+    type: string
+    default: geneqc/{{ run_id }}
+    immutable: true
+    required: true
+  method:
+    description: HTTP method
+    type: string
+    default: PATCH
+    immutable: true
+    required: true
+  files:
+    description: List of input file objects
+    type: array
+    items:
+      type: object
+    required: false
+  data:
+    description: Request body
+    type: object
+    default:
+      files: "{% if files is not none %}{{ files }}{% endif %}"
+    immutable: true
+    required: true
